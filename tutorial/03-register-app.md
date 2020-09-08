@@ -110,4 +110,4 @@ Consider what each of those permission scopes allows the bot to do, and what the
 1. You should see a **Test Connection to 'GraphBotAuth' Succeeded** message.
 
 > ![TIP]
-> You can select the **Copy Token** button on this page, and paste the token into https://jwt.ms to see the claims inside the token. This is useful when troubleshooting authentication errors.
+> You can select the **Copy Token** button on this page, and paste the token into [https://jwt.ms](https://jwt.ms) to see the claims inside the token. This is useful when troubleshooting authentication errors.
