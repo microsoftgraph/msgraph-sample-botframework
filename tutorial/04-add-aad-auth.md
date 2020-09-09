@@ -251,9 +251,11 @@ The next step is to update **CalendarBot** to use these new dialogs.
 
 The final step is to update the `ConfigureServices` method to add the services needed for authentication and the new dialog.
 
-1. Open **./Startup.cs** and replace the existing `ConfigureServices` method with the following.
+1. Open **./Startup.cs** and remove the `services.AddTransient<IBot, Bots.CalendarBot>();` line from the `ConfigureServices` method.
 
-    :::code language="csharp" source="../demo/GraphCalendarBot/Startup.cs" id="ConfigureServiceSnippet" highlight="9-22":::
+1. Insert the following code at the end of the `ConfigureServices` method.
+
+    :::code language="csharp" source="../demo/GraphCalendarBot/Startup.cs" id="ConfigureServiceSnippet":::
 
 ## Test authentication
 

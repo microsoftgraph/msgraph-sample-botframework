@@ -10,6 +10,7 @@ using Microsoft.Bot.Builder.Integration.AspNet.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using CalendarBot.Graph;
 
 namespace CalendarBot
 {
@@ -22,7 +23,6 @@ namespace CalendarBot
 
         public IConfiguration Configuration { get; }
 
-        // <ConfigureServiceSnippet>
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -31,6 +31,7 @@ namespace CalendarBot
             // Create the Bot Framework Adapter with error handling enabled.
             services.AddSingleton<IBotFrameworkHttpAdapter, AdapterWithErrorHandler>();
 
+            // <ConfigureServiceSnippet>
             // Create the storage we'll be using for User and Conversation state. (Memory is great for testing purposes.)
             services.AddSingleton<IStorage, MemoryStorage>();
 
@@ -45,8 +46,13 @@ namespace CalendarBot
 
             // Create the bot as a transient. In this case the ASP Controller is expecting an IBot.
             services.AddTransient<IBot, Bots.CalendarBot<Dialogs.MainDialog>>();
+            // </ConfigureServiceSnippet>
+
+            // <AddGraphServiceSnippet>
+            // Add the Graph client service
+            services.AddSingleton<IGraphClientService, GraphClientService>();
+            // </AddGraphServiceSnippet>
         }
-        // </ConfigureServiceSnippet>
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
