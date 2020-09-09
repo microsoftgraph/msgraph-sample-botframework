@@ -29,11 +29,13 @@ In this section you'll create a Bot Framework project.
 
 Before moving on, install some additional NuGet packages that you will use later.
 
+- [Microsoft.Bot.Builder.Dialogs](https://www.nuget.org/packages/Microsoft.Bot.Builder.Dialogs/) to add dialog support to the bot.
 - [Microsoft.Graph](https://www.nuget.org/packages/Microsoft.Graph/) for making calls to Microsoft Graph.
 
 1. Run the following commands in your CLI to install the dependencies.
 
     ```Shell
+    dotnet add package Microsoft.Bot.Builder.Dialogs --version 4.10.2
     dotnet add package Microsoft.Graph --version 3.12.0
     ```
 
