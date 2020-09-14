@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Bot.Builder;
@@ -12,6 +11,7 @@ using Microsoft.Bot.Builder.Dialogs.Choices;
 using Microsoft.Bot.Schema;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Graph;
 using CalendarBot.Graph;
 using AdaptiveCards;
 
@@ -169,12 +169,12 @@ namespace CalendarBot.Dialogs
                         await DisplayLoggedInUser(tokenResponse.Token, stepContext, cancellationToken);
                     }
                     // </ShowMeSnippet>
+                    // <ShowCalendarSnippet>
                     else if (command.StartsWith("show calendar"))
                     {
-                        await stepContext.Context.SendActivityAsync(
-                            MessageFactory.Text("I don't know how to do this yet!"),
-                            cancellationToken);
+                        await DisplayCalendarView(tokenResponse.Token, stepContext, cancellationToken);
                     }
+                    // </ShowCalendarSnippet>
                     else if (command.StartsWith("add event"))
                     {
                         await stepContext.Context.SendActivityAsync(
@@ -237,59 +237,98 @@ namespace CalendarBot.Dialogs
                 .Request()
                 .GetAsync();
 
-            // Create an Adaptive Card to display the user
-            // See https://adaptivecards.io/designer/ for possibilities
-            var userCard = new AdaptiveCard("1.2");
-
-            var columns = new AdaptiveColumnSet();
-            userCard.Body.Add(columns);
-
-            var userPhotoColumn = new AdaptiveColumn { Width = AdaptiveColumnWidth.Auto };
-            columns.Columns.Add(userPhotoColumn);
-
-            userPhotoColumn.Items.Add(new AdaptiveImage {
-                Style = AdaptiveImageStyle.Person,
-                Size = AdaptiveImageSize.Small,
-                Url = GetDataUriFromPhoto(userPhoto)
-            });
-
-            var userInfoColumn = new AdaptiveColumn {Width = AdaptiveColumnWidth.Stretch };
-            columns.Columns.Add(userInfoColumn);
-
-            userInfoColumn.Items.Add(new AdaptiveTextBlock {
-                Weight = AdaptiveTextWeight.Bolder,
-                Wrap = true,
-                Text = user.DisplayName
-            });
-
-            userInfoColumn.Items.Add(new AdaptiveTextBlock {
-                Spacing = AdaptiveSpacing.None,
-                IsSubtle = true,
-                Wrap = true,
-                Text = user.Mail ?? user.UserPrincipalName
-            });
+            // Generate an Adaptive Card
+            var userCard = CardHelper.GetUserCard(user, userPhoto);
 
             // Create an attachment message to send the card
-            var userMessage = MessageFactory.Attachment(new Attachment {
-                ContentType = AdaptiveCard.ContentType,
-                Content = userCard
-            });
+            var userMessage = MessageFactory.Attachment(
+                new Microsoft.Bot.Schema.Attachment {
+                    ContentType = AdaptiveCard.ContentType,
+                    Content = userCard
+                });
 
             await stepContext.Context.SendActivityAsync(userMessage, cancellationToken);
         }
         // </DisplayLoggedInUserSnippet>
 
-        // <GetDataUriFromPhotoSnippet>
-        private Uri GetDataUriFromPhoto(Stream photo)
+        // <DisplayCalendarViewSnippet>
+        private async Task DisplayCalendarView(
+            string accessToken,
+            WaterfallStepContext stepContext,
+            CancellationToken cancellationToken)
         {
-            // Copy to a MemoryStream to get access to bytes
-            var photoStream = new MemoryStream();
-            photo.CopyTo(photoStream);
+            var graphClient = _graphClientService
+                .GetAuthenticatedGraphClient(accessToken);
 
-            var photoBytes = photoStream.ToArray();
+            // Get user's preferred time zone and format
+            var user = await graphClient.Me
+                .Request()
+                .Select(u => new { u.MailboxSettings })
+                .GetAsync();
 
-            return new Uri($"data:image/png;base64,{Convert.ToBase64String(photoBytes)}");
+            var dateTimeFormat =
+                $"{user.MailboxSettings.DateFormat} {user.MailboxSettings.TimeFormat}";
+            if (string.IsNullOrWhiteSpace(dateTimeFormat)) {
+                // Default to a standard format if user's preference not set
+                dateTimeFormat = "G";
+            }
+
+            var preferredTimeZone = user.MailboxSettings.TimeZone;
+            var userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(preferredTimeZone);
+
+            var now = DateTime.UtcNow;
+            // Calculate the end of the week (Sunday, midnight)
+            int diff = 7 - (int)DateTime.Today.DayOfWeek;
+            var weekEndUnspecified = DateTime.SpecifyKind(DateTime.Today.AddDays(diff), DateTimeKind.Unspecified);
+            var endOfWeek = TimeZoneInfo.ConvertTimeToUtc(weekEndUnspecified, userTimeZone);
+
+            // Set query parameters for the calendar view request
+            var viewOptions = new List<QueryOption>
+            {
+                new QueryOption("startDateTime", now.ToString("o")),
+                new QueryOption("endDateTime", endOfWeek.ToString("o"))
+            };
+
+            // Get events happening between right now and the end of the week
+            // GET /me/calendarView?startDateTime=""&endDateTime=""
+            var events = await graphClient.Me
+                .CalendarView
+                .Request(viewOptions)
+                // Send user time zone in request so date/time in
+                // response will be in preferred time zone
+                .Header("Prefer", $"outlook.timezone=\"{preferredTimeZone}\"")
+                // Get max 3 per request
+                .Top(3)
+                // Only return fields app will use
+                .Select(e => new
+                {
+                    e.Subject,
+                    e.Organizer,
+                    e.Start,
+                    e.End,
+                    e.Location
+                })
+                // Order results chronologically
+                .OrderBy("start/dateTime")
+                .GetAsync();
+
+            var calendarViewMessage = MessageFactory.Text("Here are your upcoming events");
+            calendarViewMessage.AttachmentLayout = AttachmentLayoutTypes.List;
+
+            foreach(var calendarEvent in events.CurrentPage)
+            {
+                var eventCard = CardHelper.GetEventCard(calendarEvent, dateTimeFormat);
+
+                // Add the card to the message's attachments
+                calendarViewMessage.Attachments.Add(new Microsoft.Bot.Schema.Attachment
+                {
+                    ContentType = AdaptiveCard.ContentType,
+                    Content = eventCard
+                });
+            }
+
+            await stepContext.Context.SendActivityAsync(calendarViewMessage, cancellationToken);
         }
-        // </GetDataUriFromPhotoSnippet>
+        // </DisplayCalendarViewSnippet>
     }
 }

@@ -25,6 +25,7 @@ Start by implementing a service that the bot can use to get a **GraphServiceClie
     using System.IO;
     using CalendarBot.Graph;
     using AdaptiveCards;
+    using Microsoft.Graph;
     ```
 
 1. Add the following property to the **MainDialog** class.
@@ -47,11 +48,70 @@ Start by implementing a service that the bot can use to get a **GraphServiceClie
 
 In this section you'll use the Microsoft Graph to get the user's name, email address, and photo. Then you'll create an Adaptive Card to show the information.
 
-1. Add the following function to the **MainDialog** class.
+1. Create a new file in the root of the project named **CardHelper.cs**. Add the following code to the file.
 
-    :::code language="csharp" source="../demo/GraphCalendarBot/Dialogs/MainDialog.cs" id="GetDataUriFromPhotoSnippet":::
+    ```csharp
+    using AdaptiveCards;
+    using Microsoft.Graph;
+    using System;
+    using System.IO;
 
-    This function takes the photo stream returned by Microsoft Graph and converts it into a data URI.
+    namespace CalendarBot
+    {
+        public class CardHelper
+        {
+            public static AdaptiveCard GetUserCard(User user, Stream photo)
+            {
+              // Create an Adaptive Card to display the user
+                // See https://adaptivecards.io/designer/ for possibilities
+                var userCard = new AdaptiveCard("1.2");
+
+                var columns = new AdaptiveColumnSet();
+                userCard.Body.Add(columns);
+
+                var userPhotoColumn = new AdaptiveColumn { Width = AdaptiveColumnWidth.Auto };
+                columns.Columns.Add(userPhotoColumn);
+
+                userPhotoColumn.Items.Add(new AdaptiveImage {
+                    Style = AdaptiveImageStyle.Person,
+                    Size = AdaptiveImageSize.Small,
+                    Url = GetDataUriFromPhoto(photo)
+                });
+
+                var userInfoColumn = new AdaptiveColumn {Width = AdaptiveColumnWidth.Stretch };
+                columns.Columns.Add(userInfoColumn);
+
+                userInfoColumn.Items.Add(new AdaptiveTextBlock {
+                    Weight = AdaptiveTextWeight.Bolder,
+                    Wrap = true,
+                    Text = user.DisplayName
+                });
+
+                userInfoColumn.Items.Add(new AdaptiveTextBlock {
+                    Spacing = AdaptiveSpacing.None,
+                    IsSubtle = true,
+                    Wrap = true,
+                    Text = user.Mail ?? user.UserPrincipalName
+                });
+
+                return userCard;
+            }
+
+            private static Uri GetDataUriFromPhoto(Stream photo)
+            {
+                // Copy to a MemoryStream to get access to bytes
+                var photoStream = new MemoryStream();
+                photo.CopyTo(photoStream);
+
+                var photoBytes = photoStream.ToArray();
+
+                return new Uri($"data:image/png;base64,{Convert.ToBase64String(photoBytes)}");
+            }
+        }
+    }
+    ```
+
+    This code uses the **AdaptiveCard** NuGet package to build an Adaptive Card to display the user.
 
 1. Add the following function to the **MainDialog** class.
 
@@ -62,7 +122,7 @@ In this section you'll use the Microsoft Graph to get the user's name, email add
     - It uses the **graphClient** to [get the logged-in user](https://docs.microsoft.com/graph/api/user-get?view=graph-rest-1.0).
         - It uses the `Select` method to limit which fields are returned.
     - It uses the **graphClient** to [get the user's photo](https://docs.microsoft.com/graph/api/profilephoto-get?view=graph-rest-1.0), requesting the smallest supported size of 48x48 pixels.
-    - It uses the **AdaptiveCards** NuGet package to construct an Adaptive Card and sends the card as an attachment.
+    - It uses the **CardHelper** class to construct an Adaptive Card and sends the card as an attachment.
 
 1. Replace the code inside the `else if (command.StartsWith("show me"))` block in `ProcessStepAsync` with the following.
 
