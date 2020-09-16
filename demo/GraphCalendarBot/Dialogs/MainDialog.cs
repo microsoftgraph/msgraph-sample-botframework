@@ -95,12 +95,14 @@ namespace CalendarBot.Dialogs
                 var tokenResponse = stepContext.Result as TokenResponse;
                 if (!string.IsNullOrEmpty(tokenResponse?.Token))
                 {
-                    await stepContext.Context.SendActivityAsync(MessageFactory.Text("You are now logged in."), cancellationToken);
+                    await stepContext.Context.SendActivityAsync(
+                        MessageFactory.Text("You are now logged in."), cancellationToken);
                     return await stepContext.NextAsync(null, cancellationToken);
                 }
             }
 
-            await stepContext.Context.SendActivityAsync(MessageFactory.Text("Login was not successful please try again."), cancellationToken);
+            await stepContext.Context.SendActivityAsync(
+                MessageFactory.Text("Login was not successful please try again."), cancellationToken);
             return await stepContext.EndDialogAsync();
         }
 
@@ -280,7 +282,8 @@ namespace CalendarBot.Dialogs
             var now = DateTime.UtcNow;
             // Calculate the end of the week (Sunday, midnight)
             int diff = 7 - (int)DateTime.Today.DayOfWeek;
-            var weekEndUnspecified = DateTime.SpecifyKind(DateTime.Today.AddDays(diff), DateTimeKind.Unspecified);
+            var weekEndUnspecified = DateTime.SpecifyKind(
+                DateTime.Today.AddDays(diff), DateTimeKind.Unspecified);
             var endOfWeek = TimeZoneInfo.ConvertTimeToUtc(weekEndUnspecified, userTimeZone);
 
             // Set query parameters for the calendar view request

@@ -105,12 +105,14 @@ In this exercise you will use the Bot Framework's **OAuthPrompt** to implement a
                     var tokenResponse = stepContext.Result as TokenResponse;
                     if (!string.IsNullOrEmpty(tokenResponse?.Token))
                     {
-                        await stepContext.Context.SendActivityAsync(MessageFactory.Text("You are now logged in."), cancellationToken);
+                        await stepContext.Context.SendActivityAsync(
+                            MessageFactory.Text("You are now logged in."), cancellationToken);
                         return await stepContext.NextAsync(null, cancellationToken);
                     }
                 }
 
-                await stepContext.Context.SendActivityAsync(MessageFactory.Text("Login was not successful please try again."), cancellationToken);
+                await stepContext.Context.SendActivityAsync(
+                    MessageFactory.Text("Login was not successful please try again."), cancellationToken);
                 return await stepContext.EndDialogAsync();
             }
 
@@ -295,7 +297,8 @@ The final step is to update the `ConfigureServices` method to add the services n
 > You may receive the following error message in the Bot Framework Emulator when starting a conversation with the bot.
 >
 > ```text
-> Failed to generate an actual sign-in link: Error: Failed to connect to ngrok instance for OAuth postback URL: FetchError: request to http://127.0.0.1:4041/api/tunnels failed, reason: connect ECONNREFUSED 127.0.0.1:4041
+> Failed to generate an actual sign-in link: Error: Failed to connect to ngrok instance for OAuth postback URL:
+> FetchError: request to http://127.0.0.1:4041/api/tunnels failed, reason: connect ECONNREFUSED 127.0.0.1:4041
 > ```
 >
 > If this happens, close the emulator and restart it.

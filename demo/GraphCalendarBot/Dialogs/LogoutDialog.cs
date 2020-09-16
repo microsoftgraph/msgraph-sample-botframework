@@ -22,7 +22,10 @@ namespace CalendarBot.Dialogs
 
         // All dialogs should inherit this class so the user
         // can log out at any time
-        protected override async Task<DialogTurnResult> OnBeginDialogAsync(DialogContext innerDc, object options, CancellationToken cancellationToken)
+        protected override async Task<DialogTurnResult> OnBeginDialogAsync(
+            DialogContext innerDc,
+            object options,
+            CancellationToken cancellationToken)
         {
             // Check if this is a logout command
             var result = await InterruptAsync(innerDc, cancellationToken);
@@ -34,7 +37,9 @@ namespace CalendarBot.Dialogs
             return await base.OnBeginDialogAsync(innerDc, options, cancellationToken);
         }
 
-        protected override async Task<DialogTurnResult> OnContinueDialogAsync(DialogContext innerDc, CancellationToken cancellationToken)
+        protected override async Task<DialogTurnResult> OnContinueDialogAsync(
+            DialogContext innerDc,
+            CancellationToken cancellationToken)
         {
             // Check if this is a logout command
             var result = await InterruptAsync(innerDc, cancellationToken);
@@ -46,7 +51,9 @@ namespace CalendarBot.Dialogs
             return await base.OnContinueDialogAsync(innerDc, cancellationToken);
         }
 
-        private async Task<DialogTurnResult> InterruptAsync(DialogContext innerDc, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> InterruptAsync(
+            DialogContext innerDc,
+            CancellationToken cancellationToken)
         {
             // If this is a logout command, cancel any other activities and log out
             if (innerDc.Context.Activity.Type == ActivityTypes.Message)
@@ -57,8 +64,10 @@ namespace CalendarBot.Dialogs
                 {
                     // The bot adapter encapsulates the authentication processes.
                     var botAdapter = (BotFrameworkAdapter)innerDc.Context.Adapter;
-                    await botAdapter.SignOutUserAsync(innerDc.Context, ConnectionName, null, cancellationToken);
-                    await innerDc.Context.SendActivityAsync(MessageFactory.Text("You have been signed out."), cancellationToken);
+                    await botAdapter.SignOutUserAsync(
+                        innerDc.Context, ConnectionName, null, cancellationToken);
+                    await innerDc.Context.SendActivityAsync(
+                        MessageFactory.Text("You have been signed out."), cancellationToken);
                     return await innerDc.CancelAllDialogsAsync();
                 }
             }

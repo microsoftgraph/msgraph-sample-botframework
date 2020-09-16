@@ -19,7 +19,7 @@ A calendar view is a list of events on a user's calendar that fall between two d
     Consider what this code does.
 
     - It gets the user's **MailboxSettings** to determine the user's preferred time zone and date/time formats.
-    - It sets the **startDateTime** and **endDateTime** values to now, and the end of the week, respectively. This defines the window of time that the calendar view uses.
+    - It sets the **startDateTime** and **endDateTime** values to now and the end of the week, respectively. This defines the window of time that the calendar view uses.
     - It calls `graphClient.Me.CalendarView` with the following details.
         - It sets the `Prefer: outlook.timezone` header to the user's preferred time zone, causing the start and end times for the events to be in the user's timezone.
         - It uses the `Top(3)` method to limit the results to only the first 3 events.
