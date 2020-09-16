@@ -8,7 +8,7 @@ In this exercise you will use the Bot Framework's **OAuthPrompt** to implement a
     - Change the value of `MicrosoftAppPassword` to your **Graph Calendar Bot** client secret.
     - Add a value named `ConnectionName` with a value of `GraphBotAuth`.
 
-    :::code language="json" source="../demo/GraphCalendarBot/appsettings.json":::
+    :::code language="json" source="../demo/GraphCalendarBot/appsettings.example.json":::
 
     > [!NOTE]
     > If you used a value other than `GraphBotAuth` for the name of your entry in **OAuth Connection Settings** in the Azure Portal, use that value for the `ConnectionName` entry.
