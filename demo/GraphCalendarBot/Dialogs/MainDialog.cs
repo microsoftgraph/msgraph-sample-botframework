@@ -46,8 +46,9 @@ namespace CalendarBot.Dialogs
                     Timeout = 300000, // User has 5 minutes to login
                 }));
 
-            //AddDialog(new TextPrompt(nameof(TextPrompt)));
             AddDialog(new ChoicePrompt(nameof(ChoicePrompt)));
+
+            AddDialog(new NewEventDialog(configuration, graphClientService));
 
             AddDialog(new WaterfallDialog(nameof(WaterfallDialog), new WaterfallStep[]
             {
@@ -175,12 +176,12 @@ namespace CalendarBot.Dialogs
                         await DisplayCalendarView(tokenResponse.Token, stepContext, cancellationToken);
                     }
                     // </ShowCalendarSnippet>
+                    // <AddEventSnippet>
                     else if (command.StartsWith("add event"))
                     {
-                        await stepContext.Context.SendActivityAsync(
-                            MessageFactory.Text("I don't know how to do this yet!"),
-                            cancellationToken);
+                        return await stepContext.BeginDialogAsync(nameof(NewEventDialog), null, cancellationToken);
                     }
+                    // </AddEventSnippet>
                     else
                     {
                         await stepContext.Context.SendActivityAsync(

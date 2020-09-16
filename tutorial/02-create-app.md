@@ -31,6 +31,7 @@ Before moving on, install some additional NuGet packages that you will use later
 
 - [AdaptiveCards](https://www.nuget.org/packages/AdaptiveCards/) to allow the bot to send Adaptive Cards in responses.
 - [Microsoft.Bot.Builder.Dialogs](https://www.nuget.org/packages/Microsoft.Bot.Builder.Dialogs/) to add dialog support to the bot.
+- [Microsoft.Recognizers.Text.DataTypes.TimexExpression](https://www.nuget.org/packages/Microsoft.Recognizers.Text.DataTypes.TimexExpression/) to convert the TIMEX expressions returned from bot prompts into **DateTime** objects.
 - [Microsoft.Graph](https://www.nuget.org/packages/Microsoft.Graph/) for making calls to Microsoft Graph.
 
 1. Run the following commands in your CLI to install the dependencies.
@@ -38,6 +39,7 @@ Before moving on, install some additional NuGet packages that you will use later
     ```Shell
     dotnet add package AdaptiveCards --version 2.1.0
     dotnet add package Microsoft.Bot.Builder.Dialogs --version 4.10.2
+    dotnet add package Microsoft.Recognizers.Text.DataTypes.TimexExpression --version 1.4.1
     dotnet add package Microsoft.Graph --version 3.12.0
     ```
 
