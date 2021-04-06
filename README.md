@@ -2,7 +2,7 @@
 
 This module will introduce you to working with the Microsoft Graph SDK to access data in Office 365 by building bots with the Microsoft Bot Framework.
 
-## Lab - Build Bot Framework obts with the Microsoft Graph SDK
+## Lab - Build Bot Framework bots with the Microsoft Graph SDK
 
 In this lab you will create a Bot Framework project to access data in Microsoft 365 using the Microsoft Graph.
 
