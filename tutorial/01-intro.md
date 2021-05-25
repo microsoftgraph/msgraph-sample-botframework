@@ -11,6 +11,7 @@ Before you start this tutorial, you should have the following installed on your 
 
 - [.NET Core SDK](https://dotnet.microsoft.com/download)
 - [Bot Framework Emulator](https://github.com/microsoft/BotFramework-Emulator/blob/master/README.md)
+- [ngrok](https://ngrok.com/)
 
 You should also have either a personal Microsoft account with a mailbox on Outlook.com, or a Microsoft work or school account. If you don't have a Microsoft account, there are a couple of options to get a free account:
 
@@ -19,7 +20,11 @@ You should also have either a personal Microsoft account with a mailbox on Outlo
 - An Azure subscription. If you do not have one, create a [free account](https://azure.microsoft.com/free/?WT.mc_id=A261C142F) before you begin.
 
 > [!NOTE]
-> This tutorial was written with .NET Core SDK version 3.1.401. The steps in this guide may work with other versions, but that has not been tested.
+> This tutorial was written with the following versions. The steps in this guide may work with other versions, but that has not been tested.
+>
+> - .NET Core SDK version 5.0.203
+> - Bot Framework Emulator 4.1.3
+> - ngrok 2.3.40
 
 ## Feedback
 

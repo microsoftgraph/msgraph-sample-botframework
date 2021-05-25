@@ -14,7 +14,13 @@ Start by implementing a service that the bot can use to get a **GraphServiceClie
 
     :::code language="csharp" source="../demo/GraphCalendarBot/Graph/GraphClientService.cs" id="GraphClientServiceSnippet":::
 
-1. Open **./Startup.cs** and add the following code to the end of the `ConfigureServices` function.
+1. Open **./Startup.cs** and add the following `using` statement at the top of the file.
+
+    ```csharp
+    using CalendarBot.Graph;
+    ```
+
+1. Add the following code to the end of the `ConfigureServices` function.
 
     :::code language="csharp" source="../demo/GraphCalendarBot/Startup.cs" id="AddGraphServiceSnippet":::
 
@@ -23,8 +29,8 @@ Start by implementing a service that the bot can use to get a **GraphServiceClie
     ```csharp
     using System;
     using System.IO;
-    using CalendarBot.Graph;
     using AdaptiveCards;
+    using CalendarBot.Graph;
     using Microsoft.Graph;
     ```
 

@@ -37,11 +37,11 @@ Before moving on, install some additional NuGet packages that you will use later
 1. Run the following commands in your CLI to install the dependencies.
 
     ```Shell
-    dotnet add package AdaptiveCards --version 2.2.0
-    dotnet add package Microsoft.Bot.Builder.Dialogs --version 4.10.3
-    dotnet add package Microsoft.Bot.Builder.Integration.AspNet.Core --version 4.10.3
-    dotnet add package Microsoft.Recognizers.Text.DataTypes.TimexExpression --version 1.4.1
-    dotnet add package Microsoft.Graph --version 3.18.0
+    dotnet add package AdaptiveCards --version 2.7.1
+    dotnet add package Microsoft.Bot.Builder.Dialogs --version 4.13.2
+    dotnet add package Microsoft.Bot.Builder.Integration.AspNet.Core --version 4.13.2
+    dotnet add package Microsoft.Recognizers.Text.DataTypes.TimexExpression --version 1.6.0
+    dotnet add package Microsoft.Graph --version 4.0.0
     ```
 
 ## Test the bot

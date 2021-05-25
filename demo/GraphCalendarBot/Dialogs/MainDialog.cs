@@ -3,8 +3,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using AdaptiveCards;
+using CalendarBot.Graph;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Choices;
@@ -12,16 +15,14 @@ using Microsoft.Bot.Schema;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Graph;
-using CalendarBot.Graph;
-using AdaptiveCards;
 
 namespace CalendarBot.Dialogs
 {
     public class MainDialog : LogoutDialog
     {
         const string NO_PROMPT = "no-prompt";
-        protected readonly ILogger _logger;
         private readonly IGraphClientService _graphClientService;
+        protected readonly ILogger _logger;
 
         // <ConstructorSignatureSnippet>
         public MainDialog(
