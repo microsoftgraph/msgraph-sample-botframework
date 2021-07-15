@@ -263,7 +263,11 @@ The final step is to update the `ConfigureServices` method to add the services n
 
 1. Save all of your changes and start the bot with `dotnet run`.
 
-1. Open the Bot Framework Emulator. Select the **File** menu, then **New Bot Configuration...**.
+1. Open the Bot Framework Emulator. Select the gear icon &#9881; on the bottom left.
+
+1. Enter the local path to your installation of ngrok, and enable the **Bypass ngrok for local addresses** and **Run ngrok when the Emulator starts up** options. Select **Save**.
+
+1. Select the **File** menu, then **New Bot Configuration...**.
 
 1. Fill in the fields as follows.
 
@@ -301,4 +305,4 @@ The final step is to update the `ConfigureServices` method to add the services n
 > FetchError: request to http://127.0.0.1:4041/api/tunnels failed, reason: connect ECONNREFUSED 127.0.0.1:4041
 > ```
 >
-> If this happens, close the emulator and restart it.
+> If this happens, be sure to enable the **Run ngrok when the Emulator starts up** option in the emulator settings and restart the emulator.

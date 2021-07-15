@@ -10,36 +10,30 @@ In this exercise, you will create a new Bot Channels registration and an Azure A
 
     ![A screenshot of the Azure Portal menu](images/create-resource.png)
 
-1. On the **New** page, search for `Bot Channel` and select **Bot Channels Registration**.
+1. On the **New** page, search for `Azure Bot` and select **Azure Bot**.
 
-1. On the **Bot Channels Registration** page, select **Create**.
+1. On the **Azure Bot** page, select **Create**.
 
 1. Fill in the required fields, and leave **Messaging endpoint** blank. The **Bot handle** field must be unique. Be sure to review the different pricing tiers and select what makes sense for your scenario. If this is just a learning exercise, you may want to select the free option.
 
-1. Select the **Microsoft App ID and password**, then select **Create New**.
+1. For **Microsoft App ID**, select **Create new Microsoft App ID**.
 
-1. Select **Create App ID in the App Registration Portal**. This will open a new window or tab to the **App registrations** blade in the Azure Portal.
+1. Select **Review + create**. Once validation completes, select **Create**.
 
-1. In the **App registrations** blade, select **New registration**.
+1. Once deployment has finished, select **Go to resource**.
 
-1. Set the values as follows.
+1. Under **Settings**, select **Configuration**. Select the **Manage** link next to **Microsoft App ID**.
 
-    - Set **Name** to `Graph Calendar Bot`.
-    - Set **Supported account types** to **Accounts in any organizational directory and personal Microsoft accounts**.
-    - Leave **Redirect URI** empty.
-
-    ![A screenshot of the Register an application page](./images/aad-register-an-app.png)
-
-1. Select **Register**. On the **Graph Calendar Bot** page, copy the value of the **Application (client) ID** and save it, you will need it in the following steps.
-
-    ![A screenshot of the application ID of the new app registration](./images/aad-application-id.png)
-
-1. Select **Certificates & secrets** under **Manage**. Select the **New client secret** button. Enter a value in **Description** and select one of the options for **Expires** and select **Add**.
+1. Select **New client secret**. Add a description and choose an expiration, then select **Add**.
 
 1. Copy the client secret value before you leave this page. You will need it in the following steps.
 
     > [!IMPORTANT]
     > This client secret is never shown again, so make sure you copy it now. You will need to enter this value in multiple places so keep it safe.
+
+1. Select **Overview** in the left-hand menu. Copy the value of the **Application (client) ID** and save it, you will need it in the following steps.
+
+    ![A screenshot of the application ID of the new app registration](./images/aad-application-id.png)
 
 1. Return to the Bot Channel Registration window in your browser, and paste the application ID into the **Microsoft App ID** field. Paste your client secret into the **Password** field. Select **OK**.
 
@@ -49,7 +43,9 @@ In this exercise, you will create a new Bot Channels registration and an Azure A
 
 ## Create a web app registration
 
-1. Return to the **App registrations** section of the Azure Portal.
+1. Return to the home page of the Azure portal, then select **Azure Active Directory**.
+
+1. Select **App registrations**.
 
 1. Select **New registration**. On the **Register an application** page, set the values as follows.
 
@@ -87,9 +83,9 @@ Consider what each of those permission scopes allows the bot to do, and what the
 
 ## Add OAuth connection to the bot
 
-1. Navigate to your bot's Bot Channels Registration page on the Azure Portal. Select **Settings** under **Bot Management**.
+1. Navigate to your bot's Azure Bot page in the Azure Portal. Select **Configuration** under **Settings**.
 
-1. Under **OAuth Connection Settings** near the bottom of the page, select **Add Setting**.
+1. Select **Add OAuth Connection Settings**.
 
 1. Fill in the form as follows, then select **Save**.
 
