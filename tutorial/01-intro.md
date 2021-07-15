@@ -22,7 +22,7 @@ You should also have either a personal Microsoft account with a mailbox on Outlo
 > [!NOTE]
 > This tutorial was written with the following versions. The steps in this guide may work with other versions, but that has not been tested.
 >
-> - .NET Core SDK version 5.0.203
+> - .NET Core SDK version 5.0.302
 > - Bot Framework Emulator 4.1.3
 > - ngrok 2.3.40
 

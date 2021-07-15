@@ -38,9 +38,9 @@ Before moving on, install some additional NuGet packages that you will use later
 
     ```Shell
     dotnet add package AdaptiveCards --version 2.7.1
-    dotnet add package Microsoft.Bot.Builder.Dialogs --version 4.13.2
-    dotnet add package Microsoft.Bot.Builder.Integration.AspNet.Core --version 4.13.2
-    dotnet add package Microsoft.Recognizers.Text.DataTypes.TimexExpression --version 1.6.0
+    dotnet add package Microsoft.Bot.Builder.Dialogs --version 4.14.1
+    dotnet add package Microsoft.Bot.Builder.Integration.AspNet.Core --version 4.14.1
+    dotnet add package Microsoft.Recognizers.Text.DataTypes.TimexExpression --version 1.7.0
     dotnet add package Microsoft.Graph --version 4.0.0
     ```
 
