@@ -1,3 +1,7 @@
+---
+ms.localizationpriority: medium
+---
+
 <!-- markdownlint-disable MD002 MD041 -->
 
 In this section you'll use the Microsoft Graph SDK to get the next 3 upcoming events on the user's calendar for the current week.

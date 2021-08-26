@@ -1,3 +1,7 @@
+---
+ms.localizationpriority: medium
+---
+
 <!-- markdownlint-disable MD002 MD041 -->
 
 In this exercise, you will create a new Bot Channels registration and an Azure AD web application registration using the Azure Portal.
