@@ -276,7 +276,7 @@ The final step is to update the `ConfigureServices` method to add the services n
 1. Fill in the fields as follows.
 
     - **Bot name:** `CalendarBot`
-    - **Endpoint URL:** `https://localhost:3978/api/messages`
+    - **Endpoint URL:** `http://localhost:3978/api/messages`
     - **Microsoft App ID:** the application ID of your **Graph Calendar Bot** app registration
     - **Microsoft App password:** your **Graph Calendar Bot** client secret
     - **Encrypt keys stored in your bot configuration:** Enabled

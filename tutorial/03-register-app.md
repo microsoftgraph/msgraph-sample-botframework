@@ -18,9 +18,11 @@ In this exercise, you will create a new Bot Channels registration and an Azure A
 
 1. On the **Azure Bot** page, select **Create**.
 
-1. Fill in the required fields, and leave **Messaging endpoint** blank. The **Bot handle** field must be unique. Be sure to review the different pricing tiers and select what makes sense for your scenario. If this is just a learning exercise, you may want to select the free option.
+1. Fill in the required fields. The **Bot handle** field must be unique. Be sure to review the different pricing tiers and select what makes sense for your scenario. If this is just a learning exercise, you may want to select the free option.
 
-1. For **Microsoft App ID**, select **Create new Microsoft App ID**.
+1. For **Type of App**, select **User-Assigned Managed Identity**.
+
+1. For **Creation type**, select **Multi Tenant**.
 
 1. Select **Review + create**. Once validation completes, select **Create**.
 
@@ -37,14 +39,6 @@ In this exercise, you will create a new Bot Channels registration and an Azure A
 
 1. Select **Overview** in the left-hand menu. Copy the value of the **Application (client) ID** and save it, you will need it in the following steps.
 
-    ![A screenshot of the application ID of the new app registration](./images/aad-application-id.png)
-
-1. Return to the Bot Channel Registration window in your browser, and paste the application ID into the **Microsoft App ID** field. Paste your client secret into the **Password** field. Select **OK**.
-
-1. On the **Bots Channels Registration** page, select **Create**.
-
-1. Wait for the Bot Channels registration to be created. Once created, return to the Home page in the Azure Portal, then select **Bot Services**. Select your new Bots Channel registration to view its properties.
-
 ## Create a web app registration
 
 1. Return to the home page of the Azure portal, then select **Azure Active Directory**.
@@ -56,6 +50,8 @@ In this exercise, you will create a new Bot Channels registration and an Azure A
     - Set **Name** to `Graph Calendar Bot Auth`.
     - Set **Supported account types** to **Accounts in any organizational directory and personal Microsoft accounts**.
     - Under **Redirect URI**, set the first drop-down to `Web` and set the value to `https://token.botframework.com/.auth/web/redirect`.
+
+    > **NOTE:** `https://token.botframework.com/.auth/web/redirect` is the default Bot Framework OAuth redirect URL for the public Azure cloud with no data residency requirements. Depending on your environment, you may need to use a different redirect URL. See [OAuth URL support in Azure Bot Service](https://docs.microsoft.com/azure/bot-service/ref-oauth-redirect-urls?view=azure-bot-service-4.0) for more information.
 
 1. Select **Register**. On the **Graph Calendar Bot Auth** page, copy the value of the **Application (client) ID** and save it, you will need it in the following steps.
 
@@ -99,7 +95,7 @@ Consider what each of those permission scopes allows the bot to do, and what the
     - **Client secret**: The client secret of your **Graph Calendar Bot Auth** registration.
     - **Token Exchange URL**: Leave blank
     - **Tenant ID**: `common`
-    - **Scopes**: `openid profile Calendars.ReadWrite MailboxSettings.Read User.Read`
+    - **Scopes**: `https://graph.microsoft.com/.default`
 
 1. Select the **GraphBotAuth** entry under **OAuth Connection Settings**.
 
