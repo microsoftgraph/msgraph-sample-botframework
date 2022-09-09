@@ -1,13 +1,8 @@
 {
+  "cSpell.words": [
+    "appsettings"
+  ],
   "cSpell.ignoreWords": [
-    "async",
-    "bot's",
-    "econnrefused",
-    "on",
-    "on teams signin verify state async",
-    "signin",
-    "state",
-    "teams",
-    "verify"
+    "oauthlink"
   ]
 }

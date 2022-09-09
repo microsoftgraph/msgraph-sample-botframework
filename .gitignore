@@ -2,6 +2,4 @@
 [Bb]in/
 [Oo]bj/
 
-appsettings.json
-keys.txt
-demo/GraphCalendarBot.old/
+appsettings.Development.json
