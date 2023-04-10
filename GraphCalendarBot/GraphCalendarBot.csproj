@@ -11,7 +11,7 @@
     <PackageReference Include="Microsoft.Bot.Builder.Dialogs" Version="4.19.3" />
     <PackageReference Include="Microsoft.Bot.Builder.Integration.AspNet.Core" Version="4.19.3" />
     <PackageReference Include="Microsoft.Graph" Version="4.54.0" />
-    <PackageReference Include="Microsoft.Recognizers.Text.DataTypes.TimexExpression" Version="1.8.6" />
+    <PackageReference Include="Microsoft.Recognizers.Text.DataTypes.TimexExpression" Version="1.8.7" />
     <PackageReference Include="TimeZoneConverter" Version="6.1.0" />
   </ItemGroup>
 
